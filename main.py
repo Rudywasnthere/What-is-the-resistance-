@@ -6,7 +6,7 @@ first_color= input("first color (number one):\t")
 second_color= input("second color (number two):\t")
 third_color= input("third color (number three):\t")
 fourth_color= input("fourth color (number four):\t")
-
+print(f"\nyour colors are {first_color}, {second_color}, {third_color}, and {fourth_color}\n")
 black=0
 brown=1
 red=2
@@ -154,6 +154,7 @@ if  0<=third_color<3:
   if third_color ==2:
     modulus= -1
     prefix= 'K'
+    prefix_1= 'K'
   
 else:
   floor= (third_color)//3
@@ -179,6 +180,7 @@ else:
     prefix= 'T'
     prefix_1='T'
   modulus= ((third_color)%3)
+
 z= int(input("to how many places would you like to round the min and max values?\n"))
 value=  ((10*first_color) + second_color) * (10**modulus) 
 if value!=1:
@@ -254,3 +256,5 @@ if value==1:
 round_min= round(min,z)
 round_max= round(max,z)
 print(f"\nnominal value= {value} {prefix} Ohms\n minimum= {round_min} {prefix_1} Ohms\n maximum= {round_max} {prefix} Ohms")
+
+print("\n\n\nderp ☉ ‿ ⚆")
