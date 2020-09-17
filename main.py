@@ -186,6 +186,17 @@ else:
 z= int(input("to how many places would you like to round the min and max values?\n"))
 value=  ((10*first_color) + second_color) * (10**modulus) 
 if value!=1:
+  if third_color<0:
+    if third_color==-1:
+      modulus=-1
+      value= value/1000
+      prefix=""
+      prefix_1=""
+    if third_color==-2:
+      modulus=2
+      prefix="m"
+      prefix_1="m"
+      value=value
   if fourth_color==0.05:
     min= 0.95*value
     max= 1.05*value
