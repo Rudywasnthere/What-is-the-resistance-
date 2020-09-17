@@ -54,7 +54,9 @@ if first_color=="grey":
 if first_color=='white':
   first_color=white
   x+=1
-elif x==0:
+elif x== 'gold'or x=='silver'or x=='transparent'or x=='none':
+  print("You have the resistor backwards, list the colors the other way around")
+if x==0: 
   print("Error: color 1, insert a color that must be: black, brown, red, orange, yellow, green, blue, violet(purple), grey, or white")
 
 if second_color=='black':
