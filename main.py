@@ -23,6 +23,7 @@ x_2= 0
 x_3= 0
 x_4= 0
 prefix= ""
+prefix_1=""
 if first_color=='black':
   first_color=black
   x+=1
@@ -158,18 +159,25 @@ else:
   floor= (third_color)//3
   if floor==-3:
     prefix= 'n'
+    prefix_1='n'
   if floor== -2:
     prefix= 'µ'
+    prefix_1= 'µ'
   if floor== -1:
     prefix= 'm'
+    prefix_1= 'm'
   if floor==1:
     prefix= 'K'
+    prefix_1= 'K'
   if floor==2:
     prefix= 'M'
+    prefix_1= 'M'
   if floor==3:
     prefix= 'G'
+    prefix_1='G'
   if floor==4:
     prefix= 'T'
+    prefix_1='T'
   modulus= ((third_color)%3)
 z= int(input("to how many places would you like to round the min and max values?\n"))
 value=  ((10*first_color) + second_color) * (10**modulus) 
@@ -185,18 +193,64 @@ if value!=1:
     max= 1.2*value
 if value==1:
   if fourth_color==0.05:
-    min= 0.95*value *100
+    min= 0.95*value *1000
     max= 1.05*value
-    prefix= prefix-1
+    if prefix =='n':
+      prefix_1= 'p'
+    if prefix =='µ':
+      prefix_1 ='n'
+    if prefix=='m':
+      prefix_1='µ'
+    if prefix=="":
+      prefix_1='m'
+    if prefix=='K':
+      prefix_1=""
+    if prefix=='M':
+      prefix_1='K'
+    if prefix=='G':
+      prefix_1='M'
+    if prefix=='T':
+      prefix_1='G'
+
   if fourth_color==0.1:
-    min= 0.9*value *100
+    min= 0.9*value *1000
     max= 1.1*value
-    prefix=prefix-1
+    if prefix =='n':
+      prefix_1= 'p'
+    if prefix =='µ':
+      prefix_1 ='n'
+    if prefix=='m':
+      prefix_1='µ'
+    if prefix=="":
+      prefix_1='m'
+    if prefix=='K':
+      prefix_1=""
+    if prefix=='M':
+      prefix_1='K'
+    if prefix=='G':
+      prefix_1='M'
+    if prefix=='T':
+      prefix_1='G'
   if fourth_color== 0.2:
-    min= 0.8*value *100
+    min= 0.8*value *1000
     max= 1.2*value
-    
+    if prefix =='n':
+      prefix_1= 'p'
+    if prefix =='µ':
+      prefix_1 ='n'
+    if prefix=='m':
+      prefix_1='µ'
+    if prefix=="":
+      prefix_1='m'
+    if prefix=='K':
+      prefix_1=""
+    if prefix=='M':
+      prefix_1='K'
+    if prefix=='G':
+      prefix_1='M'
+    if prefix=='T':
+      prefix_1='G'
 
 round_min= round(min,z)
 round_max= round(max,z)
-print(f"\nnominal value= {value} {prefix} Ohms\n minimum= {round_min} {prefix} Ohms\n maximum= {round_max} {prefix} Ohms")
+print(f"\nnominal value= {value} {prefix} Ohms\n minimum= {round_min} {prefix_1} Ohms\n maximum= {round_max} {prefix} Ohms")
