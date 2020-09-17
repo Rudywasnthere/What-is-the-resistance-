@@ -1,3 +1,5 @@
+##Rudy Garcia
+import time, sys
 
 print("Hi I am here to help calculate the resistance for you")
 print("First I will need the colors on the resistor:\n either: black, brown, red, orange, yellow, green, blue, violet(purple), gold, silver, or transparent(none)")
@@ -270,4 +272,6 @@ round_min= round(min,z)
 round_max= round(max,z)
 print(f"\nnominal value= {value} {prefix} Ohms\n minimum= {round_min} {prefix_1} Ohms\n maximum= {round_max} {prefix} Ohms")
 
-print("\n\n\nderp ☉ ‿ ⚆")
+print("\n\n\nderp ☉ ‿ ⚆\n\npress enter when finished to close file, re run file to go again")
+
+time.sleep(700)
