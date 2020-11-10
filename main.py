@@ -1,15 +1,37 @@
 ##Rudy Garcia
 import time, sys
+import math, sys
+import random, sys
 
 print("Hi I am here to help calculate the resistance for you")
 print("First I will need the colors on the resistor:\n either: black, brown, red, orange, yellow, green, blue, violet(purple), gold, silver, or transparent(none)")
 ## sets color values
+
+possible_first_colors = ["red","orange","yellow"]
+possible_fourth_colors = ["gold","silver","transparent","none"]
 restart=""
+
+def correct_input(name_check):
+  position = name_check.split("_")
+  true_position = position.pop(0)
+  name= input(f"{true_position} color:\t")
+  name= name.lower()
+  if name_check != "fourth_color":
+    while name not in possible_first_colors:
+      name = str(input(f"Please input a correct {true_position} color: "))
+  if name_check == "fourth_color":
+    while name not in possible_fourth_colors:
+      name = str(input("Please input a correct fourth color: "))
+  return name
+
+
+
 while restart!="done":
-  first_color= input("first color (number one):\t")
-  second_color= input("second color (number two):\t")
-  third_color= input("third color (number three):\t")
-  fourth_color= input("fourth color (number four):\t")
+  first_color = correct_input("first_color")
+  second_color = correct_input("second_color")
+  third_color = correct_input("third_color")
+  fourth_color = correct_input("fourth_color")
+
   print(f"\nyour colors are {first_color}, {second_color}, {third_color}, and {fourth_color}\n")
   black=0
   brown=1
@@ -58,10 +80,7 @@ while restart!="done":
   if first_color=='white':
     first_color=white
     x+=1
-  elif x== 'gold'or x=='silver'or x=='transparent'or x=='none':
-    print("You have the resistor backwards, list the colors the other way around")
-  if x==0: 
-    print("Error: color 1, insert a color that must be: black, brown, red, orange, yellow, green, blue, violet(purple), grey, or white")
+
   if second_color=='black':
     second_color=black
     x_2+=1
@@ -92,8 +111,6 @@ while restart!="done":
   if second_color=='white':
     second_color=white
     x_2+=1
-  elif x_2==0:
-    print("Error: color 2, insert a color that must be: black, brown, red, orange, yellow, green, blue, violet(purple), grey, or white")
 
   if third_color=='black':
     third_color=black
@@ -131,8 +148,7 @@ while restart!="done":
   if third_color=='gold':
     third_color=-1
     x_3+=1
-  elif x_3==0:
-    print("Error: color 3, insert a color that must be: black, brown, red, orange, yellow, green, blue, violet(purple), grey, white, gold, silver, or transparent(none)")
+  
 
   if fourth_color=='gold':
     fourth_color= 0.05
@@ -143,8 +159,7 @@ while restart!="done":
   if fourth_color=='none' or fourth_color=='transparent':
     fourth_color=0.2
     x_4+=1
-  elif x_4==0:
-    print("Error: color 4 , insert a color that is either: gold, silver, or transparent(none)")
+  
 
 ##calculation time
   if  0<=third_color<3:
@@ -268,7 +283,7 @@ while restart!="done":
         prefix_1='M'
       if prefix=='T':
         prefix_1='G'
-
+  value= round(value, z)
   round_min= round(min,z)
   round_max= round(max,z)
   print(f"\nnominal value= {value} {prefix} Ohms\n minimum= {round_min} {prefix_1} Ohms\n maximum= {round_max} {prefix} Ohms")
