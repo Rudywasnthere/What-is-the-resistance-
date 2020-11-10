@@ -1,5 +1,4 @@
 ##Rudy Garcia
-import time, sys
 import math, sys
 import random, sys
 
@@ -7,9 +6,9 @@ print("Hi I am here to help calculate the resistance for you")
 print("First I will need the colors on the resistor:\n either: black, brown, red, orange, yellow, green, blue, violet(purple), gold, silver, or transparent(none)")
 ## sets color values
 
-possible_first_colors = ["red","orange","yellow"]
+possible_first_colors = ["black","brown","red","orange","yellow","green","blue","violet","purple",""]
 possible_fourth_colors = ["gold","silver","transparent","none"]
-restart=""
+restart= ""
 
 def correct_input(name_check):
   position = name_check.split("_")
