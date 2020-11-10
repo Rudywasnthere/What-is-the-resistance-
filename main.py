@@ -10,6 +10,9 @@ possible_first_colors = ["black","brown","red","orange","yellow","green","blue",
 possible_fourth_colors = ["gold","silver","transparent","none"]
 restart= ""
 
+color_values= {'black':0,'brown':1,'red':2,'orange':3,'yellow':4,'green':5,'blue':6,'purple':7,'violet':7,'gold':-1,'silver':-2}
+tolerance_values= {'gold':0.05,'silver':0.1,'transparent':0.2,'none':0.2}
+
 def correct_input(name_check):
   position = name_check.split("_")
   true_position = position.pop(0)
