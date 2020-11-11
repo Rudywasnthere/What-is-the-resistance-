@@ -1,7 +1,10 @@
 ##Rudy Garcia
+
 import math, sys
 import random, sys
+import time, sys
 
+non_prefixed_number= 0
 print("Hi I am here to help calculate the resistance for you")
 print("First I will need the colors on the resistor:\n either: black, brown, red, orange, yellow, green, blue, violet(purple), gold, silver, or transparent(none)")
 ## sets color values
@@ -12,6 +15,28 @@ restart= ""
 
 color_values= {'black':0,'brown':1,'red':2,'orange':3,'yellow':4,'green':5,'blue':6,'purple':7,'violet':7,'gold':-1,'silver':-2}
 tolerance_values= {'gold':0.05,'silver':0.1,'transparent':0.2,'none':0.2}
+count_prefixes= {'0':"", '1':'K','2':'M','3':'G','4':'T','5':'P','6':'E'}
+
+def calculations(first_color, second_color, third_color, fourth_color): 
+  
+  first_digit= int(color_values[f'{first_color}'])*10 + int(color_values[f'{second_color}'])
+  non_Prefixed_number= int(first_digit)*(10**int(color_values[f'{third_color}']))
+  non_prefixed_number += non_Prefixed_number
+  return non_Prefixed_number
+
+def prefix_calculator(non_prefixed_number):
+  count= 0 
+  if non_prefixed_number.isnumeric() is True:
+    while non_prefixed_number>=1000:
+      non_prefixed_number= non_prefixed_number/1000
+      count +=1
+    count= str(count)
+    prefix= count_prefixes[f'{count}']
+    prefixed_number = f"{count} {prefix}"
+    return prefixed_number
+  else:
+    return "Error"
+
 
 def correct_input(name_check):
   position = name_check.split("_")
@@ -33,7 +58,8 @@ while restart!="done":
   second_color = correct_input("second_color")
   third_color = correct_input("third_color")
   fourth_color = correct_input("fourth_color")
-
+  print(calculations(first_color, second_color, third_color, fourth_color))
+  print(prefix_calculator(non_prefixed_number))
   print(f"\nyour colors are {first_color}, {second_color}, {third_color}, and {fourth_color}\n")
   black=0
   brown=1
