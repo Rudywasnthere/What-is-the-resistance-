@@ -5,39 +5,18 @@ import random, sys
 import time, sys
 
 non_prefixed_number= 0
+##introdcution
 print("Hi I am here to help calculate the resistance for you")
 print("First I will need the colors on the resistor:\n either: black, brown, red, orange, yellow, green, blue, violet(purple), gold, silver, or transparent(none)")
-## sets color values
-
+## dictionaries for reference in my functions
 possible_first_colors = ["black","brown","red","orange","yellow","green","blue","violet","purple",""]
 possible_fourth_colors = ["gold","silver","transparent","none"]
 restart= ""
-
 color_values= {'black':0,'brown':1,'red':2,'orange':3,'yellow':4,'green':5,'blue':6,'purple':7,'violet':7,'gold':-1,'silver':-2}
-tolerance_values= {'gold':0.05,'silver':0.1,'transparent':0.2,'none':0.2}
+tolerance_values= {'gold':0.95,'silver':0.9,'transparent':0.8,'none':0.8}
 count_prefixes= {'0':"", '1':'K','2':'M','3':'G','4':'T','5':'P','6':'E'}
-
-def calculations(first_color, second_color, third_color, fourth_color): 
-  
-  first_digit= int(color_values[f'{first_color}'])*10 + int(color_values[f'{second_color}'])
-  non_Prefixed_number= int(first_digit)*(10**int(color_values[f'{third_color}']))
-  non_prefixed_number += non_Prefixed_number
-  return non_Prefixed_number
-
-def prefix_calculator(non_prefixed_number):
-  count= 0 
-  if non_prefixed_number.isnumeric() is True:
-    while non_prefixed_number>=1000:
-      non_prefixed_number= non_prefixed_number/1000
-      count +=1
-    count= str(count)
-    prefix= count_prefixes[f'{count}']
-    prefixed_number = f"{count} {prefix}"
-    return prefixed_number
-  else:
-    return "Error"
-
-
+##funcitons that sorts inputs, and calculate based on them
+## calculates upper and lower tolerance values based on fourth color band, and the nominal value
 def correct_input(name_check):
   position = name_check.split("_")
   true_position = position.pop(0)
@@ -51,6 +30,51 @@ def correct_input(name_check):
       name = str(input("Please input a correct fourth color: "))
   return name
 
+def calculations(first_color, second_color, third_color): 
+  first_digit= int(color_values[f'{first_color}'])*10 + int(color_values[f'{second_color}'])
+  non_Prefixed_number= int(first_digit)*(10**int(color_values[f'{third_color}']))
+  return non_Prefixed_number
+
+def prefix_calculator(non_prefixed_number):
+  count= 0 
+  while non_prefixed_number>=1000:
+      non_prefixed_number= non_prefixed_number/1000
+      count +=1
+  count= str(count)
+  prefix= count_prefixes[f'{count}']
+  prefixed_number = f"{non_prefixed_number} {prefix}"
+  return prefixed_number, count, prefix, non_prefixed_number
+
+def tolerance(fourth_color, count, nominal_value):
+  variance = int(tolerance_values[f'{fourth_color}'])
+  lower_nominal = variance*int(nominal_value)
+  if lower_nominal <1:
+    lower_nominal = 1000*lower_nominal
+    count = int(count) - 1
+    count= str(count)
+    lower_prefix= count_prefixes[f'{count}']
+  else:
+    lower_prefix = ""
+  upper_nominal= (1 + variance)*nominal_value
+  return lower_prefix, lower_nominal, upper_nominal
+
+def round_outputs(upper, lower, non_prefixed_number):
+  round_places= input("to how many places would you like to round the min and max values? (hit enter for no rounding)\n")
+  length_lower = len(str(non_prefixed_number))
+  if round_places != "":
+    round_places= int(round_places)
+    round_place= int(round_places + length_lower)
+    final_number= round(non_prefixed_number,round_place)
+    final_lower= round(lower,round_place)
+    final_upper= round(upper,round_place)
+  else:
+    final_number= non_prefixed_number
+    final_lower= lower
+    final_upper= upper
+  return final_number, final_lower, final_upper
+## gets the final outputs to give to the user
+
+def final_output(prefixed_number, non_prefixed_number, final_lower, final_upper, low_prefix):    print(f"\nnominal value= {prefixed_number} Ohms\n minimum= {final_lower} {low_prefix} Ohms\n maximum=  {final_upper} {prefix} Ohms")
 
 
 while restart!="done":
@@ -58,262 +82,10 @@ while restart!="done":
   second_color = correct_input("second_color")
   third_color = correct_input("third_color")
   fourth_color = correct_input("fourth_color")
-  print(calculations(first_color, second_color, third_color, fourth_color))
-  print(prefix_calculator(non_prefixed_number))
-  print(f"\nyour colors are {first_color}, {second_color}, {third_color}, and {fourth_color}\n")
-  black=0
-  brown=1
-  red=2
-  orange=3
-  yellow=4
-  green=5
-  blue=6
-  violet=7
-  purple=7
-  grey=8
-  white=9
-  x= 0
-  x_2= 0
-  x_3= 0
-  x_4= 0
-  prefix= ""
-  prefix_1=""
-  if first_color=='black':
-    first_color=black
-    x+=1
-  if first_color=='brown':
-    first_color=brown
-    x+=1
-  if first_color=='red':
-    first_color=red
-    x+=1
-  if first_color=='orange':
-    first_color=orange
-    x+=1
-  if first_color=='yellow':
-    first_color=yellow
-    x+=1
-  if first_color=='green':
-    first_color=green
-    x+=1
-  if first_color=='blue':
-    first_color=blue
-    x+=1
-  if first_color=='purple' or first_color=='violet':
-    first_color=purple
-    x+=1
-  if first_color=="grey":
-    first_color=grey
-    x+=1
-  if first_color=='white':
-    first_color=white
-    x+=1
+  non_prefixed_number = calculations(first_color, second_color, third_color)
+  prefixed_number, count, prefix, simplified_number = prefix_calculator(non_prefixed_number)
+  low_prefix, lower, upper = tolerance(fourth_color, count, simplified_number)
+  final_number, final_lower, final_upper = round_outputs(upper, lower, non_prefixed_number)
+  print(f"\nnominal value= {prefixed_number} Ohms\n minimum= {final_lower} {low_prefix} Ohms\n maximum=  {final_upper} {prefix} Ohms")
 
-  if second_color=='black':
-    second_color=black
-    x_2+=1
-  if second_color=='brown':
-    second_color=brown
-    x_2+=1
-  if second_color=='red':
-    second_color=red
-    x_2+=1
-  if second_color=='orange':
-    second_color=orange
-    x_2+=1
-  if second_color=='yellow':
-    second_color=yellow
-    x_2+=1
-  if second_color=='green':
-    second_color=green
-    x_2+=1
-  if second_color=='blue':
-    second_color=blue
-    x_2+=1
-  if second_color=='purple' or second_color=='violet':
-    second_color=purple
-    x_2+=1
-  if second_color=="grey":
-    second_color=grey
-    x_2+=1
-  if second_color=='white':
-    second_color=white
-    x_2+=1
-
-  if third_color=='black':
-    third_color=black
-    x_3+=1
-  if third_color=='brown':
-    third_color=brown
-    x_3+=1
-  if third_color=='red':
-    third_color=red
-    x_3+=1
-  if third_color=='orange':
-    third_color=orange
-    x_3+=1
-  if third_color=='yellow':
-    third_color=yellow
-    x_3+=1
-  if third_color=='green':
-    third_color=green
-    x_3+=1
-  if third_color=='blue':
-    third_color=blue
-    x_3+=1
-  if third_color=='purple' or third_color=='violet':
-    third_color=purple
-    x_3+=1
-  if third_color=="grey":
-    third_color=grey
-    x_3+=1
-  if third_color=='white':
-    third_color=white
-    x_3+=1
-  if third_color== 'silver':
-    third_color= -2
-    x_3+=1
-  if third_color=='gold':
-    third_color=-1
-    x_3+=1
-  
-
-  if fourth_color=='gold':
-    fourth_color= 0.05
-    x_4+=1
-  if fourth_color== 'silver':
-    fourth_color= 0.1
-    x_4+=1
-  if fourth_color=='none' or fourth_color=='transparent':
-    fourth_color=0.2
-    x_4+=1
-  
-
-##calculation time
-  if  0<=third_color<3:
-    floor= third_color
-    modulus= third_color-3
-    if third_color==0:
-      modulus=0
-      prefix= ""
-    if third_color ==1:
-      modulus=1
-      prefix= ""
-    if third_color ==2:
-      modulus= -1
-      prefix= 'K'
-      prefix_1= 'K'
-  
-  else:
-    floor= (third_color)//3
-    if floor==-3:
-      prefix= 'n'
-      prefix_1='n'
-    if floor== -2:
-      prefix= 'µ'
-      prefix_1= 'µ'
-    if floor== -1:
-      prefix= 'm'
-      prefix_1= 'm'
-    if floor==1:
-      prefix= 'K'
-      prefix_1= 'K'
-    if floor==2:
-      prefix= 'M'
-      prefix_1= 'M'
-    if floor==3:
-      prefix= 'G'
-      prefix_1='G'
-    if floor==4:
-      prefix= 'T'
-      prefix_1='T'
-    modulus= ((third_color)%3)
-
-  z= int(input("to how many places would you like to round the min and max values?\n"))
-  value=  ((10*first_color) + second_color) * (10**modulus) 
-  if value!=1:
-    if third_color<0:
-      if third_color==-1:
-        modulus=-1
-        value= value/1000
-        prefix=""
-        prefix_1=""
-      if third_color==-2:
-        modulus=2
-        prefix="m"
-        prefix_1="m"
-        value=value
-    if fourth_color==0.05:
-      min= 0.95*value
-      max= 1.05*value
-    if fourth_color==0.1:
-      min= 0.9*value
-      max= 1.1*value
-    if fourth_color== 0.2:
-      min= 0.8*value
-      max= 1.2*value
-  if value==1:
-    if fourth_color==0.05:
-      min= 0.95*value *1000
-      max= 1.05*value
-      if prefix =='n':
-        prefix_1= 'p'
-      if prefix =='µ':
-        prefix_1 ='n'
-      if prefix=='m':
-        prefix_1='µ'
-      if prefix=="":
-        prefix_1='m'
-      if prefix=='K':
-        prefix_1=""
-      if prefix=='M':
-        prefix_1='K'
-      if prefix=='G':
-        prefix_1='M'
-      if prefix=='T':
-        prefix_1='G'
-
-    if fourth_color==0.1:
-      min= 0.9*value *1000
-      max= 1.1*value
-      if prefix =='n':
-        prefix_1= 'p'
-      if prefix =='µ':
-        prefix_1 ='n'
-      if prefix=='m':
-        prefix_1='µ'
-      if prefix=="":
-        prefix_1='m'
-      if prefix=='K':
-        prefix_1=""
-      if prefix=='M':
-        prefix_1='K'
-      if prefix=='G':
-        prefix_1='M'
-      if prefix=='T':
-        prefix_1='G'
-    if fourth_color== 0.2:
-      min= 0.8*value *1000
-      max= 1.2*value
-      if prefix =='n':
-        prefix_1= 'p'
-      if prefix =='µ':
-        prefix_1 ='n'
-      if prefix=='m':
-        prefix_1='µ'
-      if prefix=="":
-        prefix_1='m'
-      if prefix=='K':
-        prefix_1=""
-      if prefix=='M':
-        prefix_1='K'
-      if prefix=='G':
-        prefix_1='M'
-      if prefix=='T':
-        prefix_1='G'
-  value= round(value, z)
-  round_min= round(min,z)
-  round_max= round(max,z)
-  print(f"\nnominal value= {value} {prefix} Ohms\n minimum= {round_min} {prefix_1} Ohms\n maximum= {round_max} {prefix} Ohms")
   restart= input("\n\n\nderp ☉ ‿ ⚆\n\n press any button to continue, enter \"done\" when your finished to close the file.\n")
-
