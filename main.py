@@ -4,12 +4,12 @@ import math, sys
 import random, sys
 restart= "yeet"
 
-while restart!="done":
-  ##introdcution
-  print("Hi I am here to help calculate the resistance for you")
-  print("If there is a bug, hit cntrl + C to crash the file")
-  print("First I will need the colors on the resistor:\n(either: black, brown, red, orange, yellow, green, blue, violet(purple), gold, silver, or transparent(none))")
+##introduction
+print("Hi I am here to help calculate the resistance for you")
+print("If there is a bug, hit cntrl + C to crash the file")
+print("First I will need the colors on the resistor:\n(either: black, brown, red, orange, yellow, green, blue, violet(purple), gold, silver, or transparent(none))")
 
+while restart!="done":
   ## dictionaries for reference in my functions
   possible_first_colors = ["black","brown","red","orange","yellow","green","blue","violet","purple","grey","gray","white"]
   possible_fourth_colors = ["gold","silver","transparent","none"]
