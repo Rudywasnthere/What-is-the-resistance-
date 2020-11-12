@@ -5,13 +5,14 @@ import random, sys
 
 ##introdcution
 print("Hi I am here to help calculate the resistance for you")
-print("First I will need the colors on the resistor:\n either: black, brown, red, orange, yellow, green, blue, violet(purple), gold, silver, or transparent(none)")
+print("If there is a bug, hit cntrl + C to crash the file")
+print("First I will need the colors on the resistor:\n(either: black, brown, red, orange, yellow, green, blue, violet(purple), gold, silver, or transparent(none))")
 
 ## dictionaries for reference in my functions
-possible_first_colors = ["black","brown","red","orange","yellow","green","blue","violet","purple",""]
+possible_first_colors = ["black","brown","red","orange","yellow","green","blue","violet","purple","grey","gray","white"]
 possible_fourth_colors = ["gold","silver","transparent","none"]
 restart= ""
-color_values= {'black':0,'brown':1,'red':2,'orange':3,'yellow':4,'green':5,'blue':6,'purple':7,'violet':7,'gold':-1,'silver':-2}
+color_values= {'black':0,'brown':1,'red':2,'orange':3,'yellow':4,'green':5,'blue':6,'purple':7,'violet':7,'grey':8,'gray':8,'white':9,'gold':-1,'silver':-2}
 tolerance_values= {'gold':0.05,'silver':0.1,'transparent':0.2,'none':0.2}
 tolerance_percents = {'gold':5, 'silver':10, 'transparent':20, 'none':20}
 count_prefixes= {'0':"", '1':'K','2':'M','3':'G','4':'T','5':'P','6':'E'}
@@ -19,6 +20,8 @@ count_prefixes= {'0':"", '1':'K','2':'M','3':'G','4':'T','5':'P','6':'E'}
 ##funcitons that sorts inputs, and calculate based on them
 ## ensures correct initial inputs
 def correct_input(name_check):
+  count_color= 0
+  count_possible_inputs= 0
   position = name_check.split("_")
   true_position = position.pop(0)
   name= input(f"{true_position} color:\t")
@@ -26,10 +29,31 @@ def correct_input(name_check):
   if name_check != "fourth_color":
     while name not in possible_first_colors:
       name = str(input(f"Please input a correct {true_position} color: "))
+      count_color +=1
+      if count_possible_inputs ==0 and count_color >2 :
+        print(possible_inputs(true_position, name_check, count_color))
+        count_possible_inputs +=1
   if name_check == "fourth_color":
     while name not in possible_fourth_colors:
       name = str(input("Please input a correct fourth color: "))
+      count_color += 1
+      if count_possible_inputs == 0 and count_color > 2: 
+        print(possible_inputs(true_position, name_check, count_color))
+        count_possible_inputs +=1
   return name
+
+def possible_inputs(true_position, name_check, count_color):
+  if count_color>2:
+    knowledge= input(f"Would you like to know the possibe {true_position} colors?:\t")
+    if knowledge =="yes" or knowledge == "Yes":
+      if name_check == "fourth_color":
+        return "They are: Gold, Silver, or Transparent(none)"
+      else: 
+        return "They are: Black, Brown, Red, Orange, Yellow, Green, Blue, or Violet(purple)"
+    elif knowledge =='no' or knowledge =='No':
+      return "Well put the right colors in then :)"
+    else: 
+      return "Sorry, tis a yes or no question"
 
 ##calculates un simplified nominal value
 def calculations(first_color, second_color, third_color): 
