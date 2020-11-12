@@ -112,6 +112,7 @@ def main():
   print(F"Your color inputs are {first_color}, {second_color}, {third_color} ({non_prefixed_number}) and your tolerance is ±{variance_percent}% and you rounded to {round_places} places ")
   print(final_output(prefixed_number, non_prefixed_number, final_lower, final_upper, low_prefix, prefix))
 
+restart= ""
 while restart!="done":
   main()
   restart = input("\nderp ☉ ‿ ⚆\n\n press any button to continue, enter \"done\" when your finished to close the file.\n")
