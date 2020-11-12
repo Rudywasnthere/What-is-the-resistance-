@@ -90,14 +90,13 @@ def round_outputs(upper, lower, non_prefixed_number):
   return final_number, final_lower, final_upper, round_places
 ## gets the final outputs to give to the user
 
-def final_output(prefixed_number, non_prefixed_number, final_lower, final_upper, low_prefix):   
+def final_output(prefixed_number, non_prefixed_number, final_lower, final_upper, low_prefix, prefix):   
   if low_prefix =="":
    return f"\nnominal value= {prefixed_number} Ohms\n minimum= {final_lower} {prefix} Ohms\n maximum=  {final_upper} {prefix} Ohms"
   if low_prefix !="":
     return f"\nnominal value= {prefixed_number} Ohms\n minimum= {final_lower} {low_prefix} Ohms\n maximum=  {final_upper} {prefix} Ohms"
 
-
-while restart!="done":
+def main():
   first_color = correct_input("first_color")
   second_color = correct_input("second_color")
   third_color = correct_input("third_color")
@@ -110,6 +109,9 @@ while restart!="done":
   low_prefix, lower, upper, variance_percent = tolerance(fourth_color, count, simplified_number)
 
   final_number, final_lower, final_upper, round_places = round_outputs(upper, lower, non_prefixed_number)
-  print(F"Your color inputs are {first_color}, {second_color}, {third_color} ({non_prefixed_number}), and your tolerance is ±{variance_percent}% and you rounded to {round_places} places ")
-  print(final_output(prefixed_number, non_prefixed_number, final_lower, final_upper, low_prefix))
+  print(F"Your color inputs are {first_color}, {second_color}, {third_color} ({non_prefixed_number}) and your tolerance is ±{variance_percent}% and you rounded to {round_places} places ")
+  print(final_output(prefixed_number, non_prefixed_number, final_lower, final_upper, low_prefix, prefix))
+
+while restart!="done":
+  main()
   restart = input("\nderp ☉ ‿ ⚆\n\n press any button to continue, enter \"done\" when your finished to close the file.\n")
