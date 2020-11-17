@@ -122,9 +122,9 @@ while restart!="done":
   ## gets the final outputs to give to the user
   def final_output(prefixed_number, non_prefixed_number, final_lower, final_upper, low_prefix, prefix):   
     if low_prefix =="":
-      return f"\nnominal value= {prefixed_number} Ohms\n minimum= {final_lower} {prefix} Ohms\n maximum=  {final_upper} {prefix} Ohms"
+      return f"____________________________________________________\nnominal value   = {prefixed_number} Ohms\n minimum        = {final_lower} {prefix} Ohms\n maximum        = {final_upper} {prefix} Ohms\n_____________________________________________________"
     if low_prefix !="":
-      return f"\nnominal value= {prefixed_number} Ohms\n minimum= {final_lower} {low_prefix} Ohms\n maximum=  {final_upper} {prefix} Ohms"
+      return f"____________________________________________________\nnominal value   = {prefixed_number} Ohms\nminimum         = {final_lower} {low_prefix} Ohms\nmaximum         = {final_upper} {prefix} Ohms\n_____________________________________________________"
 
   ## main function for fun (possibly)
   first_color = correct_input("first_color")
